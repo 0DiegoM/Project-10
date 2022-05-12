@@ -53,6 +53,45 @@ MouseEvent = 'mouseleave';
 function ClearArea() {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 }
+var lastPositonTouchX, lastPositonTouchY;
 
+var width = screen.width;
 
+new_width =  screen.width - 70; 
+new_height = screen.height - 300;
+	if(width < 992)
+	{
+	document.getElementById("myCanvas").width = new_width;
+    document.getElementById("myCanvas").height = new_height;
+    document.body.style.overflow = "hidden";
+	}
+	canvas.addEventListener("touchstart", my_touchstart);
+
+function my_touchstart(e) 
+{
+	console.log("my_touchstart");
+  //Actividad adicional
+  Color = document.getElementById("Color").value;
+  WidthOfLine = document.getElementById("WidthOfLine").value;
+  //Final de la actividad adicional
+         
+    lastPositonTouchY = e.touches[0].clientX - canvas.offsetLeft;
+    lastPositonTouchX = e.touches[0].clientY - canvas.offsetTop;
+}
+
+canvas.addEventListener('touchmove', my_touchmove);
+
+function my_touchmove(e) {
+    currentPositonTouchX = e.touches[0].clientX - canvas.offsetLeft;
+    currentPositonTouchY = e.touches[0].clientY - canvas.offsetTop;
+ctx.beginPath();
+ctx.strokeStyle = Color;
+ctx.lineWidth = WidthOfLine;
+ctx.moveTo(lastPositonTouchX, lastPositonTouchY);
+ctx.lineTo(currentPositonTouchX, currentPositonTouchY);
+ctx.stroke()
+
+lastPositonTouchX = currentPositonTouchX;
+lastPositonTouchY = currentPositonTouchY;
+}
 
